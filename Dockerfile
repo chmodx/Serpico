@@ -24,6 +24,7 @@ RUN source /usr/share/rvm/scripts/rvm \
 ENV SRP_ROOT /Serpico
 ENV SRP_ADMIN admin
 ENV SRP_ADMIN_PASS pass
+ENV SRP_INIT "yes"
 
 WORKDIR $SRP_ROOT
 COPY . $SRP_ROOT
