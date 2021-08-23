@@ -15,10 +15,12 @@ if !userx
         username = gets.chomp
     end
     username = "administrator" if username == ""
-
-    puts "Generating random password and adding the Administrator with username #{username}..."
-
-    password = rand(36**10).to_s(36)
+    
+    password = ENV['SRP_ADMIN_PASS']
+    if (!password)
+        puts "Generating random password and adding the Administrator with username #{username}..."
+        password = rand(36**10).to_s(36)
+    end
 
     exists = User.first(:username => username)
 
@@ -50,8 +52,12 @@ if (do_findings)
     end
 else
     # Otherwise prompt for user input.
-    puts "Would you like to initialize the database with templated findings? (Y/n)"
-    find_i = gets.chomp
+    find_i = ENV['SRP_INIT']
+    if (!find_i)
+        puts "Would you like to initialize the database with templated findings? (Y/n)"
+        find_i = gets.chomp
+    end
+    
     if (find_i == "" or find_i.downcase == "y" or find_i.downcase == "yes")
         find_i = true
     end
